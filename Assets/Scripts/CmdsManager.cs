@@ -5,11 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class CmdsManager : MonoBehaviour
 {
+    // Display Group
     public TextMesh[] Status_NOGO = new TextMesh[2];
     public TextMesh Status_GO;
     public TextMesh Status_DispenseReady;
 
     public TextMesh Disp_LCD;
+
+    public SpriteRenderer lcd_TestPattern;
+
+    // Switches and other interactive elements
+    public Switch_Jettison sw_Jettison;
+
+
 
     public bool External_Power = false;
     public bool Switch_Jettison = false;
@@ -22,6 +30,9 @@ public class CmdsManager : MonoBehaviour
 
     public GameObject Power_on;
     public GameObject Power_off;
+
+    
+    
 
     int failed = 0;
 
@@ -175,6 +186,7 @@ public class CmdsManager : MonoBehaviour
             Status_NOGO[1].color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
             Status_GO.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
             Disp_LCD.text = "";
+            lcd_TestPattern.enabled = false;
         }
         else if (CurrentMode == mode.BIT1)
         {
@@ -182,7 +194,8 @@ public class CmdsManager : MonoBehaviour
             Status_NOGO[1].color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
             Status_DispenseReady.color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
             Status_GO.color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
-            Disp_LCD.text = "****************";
+            Disp_LCD.text = "";
+            lcd_TestPattern.enabled = true;
         }
         else if (CurrentMode == mode.BIT2)
         {
@@ -191,6 +204,7 @@ public class CmdsManager : MonoBehaviour
             Status_DispenseReady.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
             Status_GO.color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
             Disp_LCD.text = "";
+            lcd_TestPattern.enabled = false;
         }
         else if (CurrentMode == mode.BIT3)
         {
