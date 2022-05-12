@@ -17,8 +17,11 @@ public class Switch_Mode : MonoBehaviour
 
     public AudioSource snd_Switched;       // Switch Sounds
 
+    public Switch_Generic[] sw_Generic = new Switch_Generic[4];
+
     // Switch variables
     public bool debugMode = false;
+    public bool demoMode = true;
 
     int Position = 0;               // Current switch position to off
     int oldPosition = 0;            // Track last known position to play sounds
@@ -46,8 +49,23 @@ public class Switch_Mode : MonoBehaviour
     void Start()
     {
         float diceRoll = Random.Range(0.0f, 1.0f);
-        if (diceRoll < 0.05) Position = 3;           // 5% chance of switch being set to semi-auto
-        if (diceRoll < 0.1) Position = 4;           // additional 5% more of switch in auto
+        
+        // Q: Wait why is this code public isn't this and OPSEC concern?
+        // A: This panel is not only not classified, but physical simulated variants also can be purchased
+        //    It's been disected, built, and documented in numerous flight sims, additionally the information
+        //    here does not honestly depict how to cause a safety incidient. It is more to provide correct
+        //    training specifically on how to load flares and maintain annual compentancy without need for a
+        //    aircraft/training device should it not be available.
+        if (!demoMode)
+        {
+
+            if (diceRoll < 0.05) Position = 3;           // 5% chance of switch being set to semi-auto
+            if (diceRoll < 0.1) Position = 4;           // additional 5% more of switch in auto
+            if (Position >= 2)
+            {
+                sw_Generic[(int)(Random.Range(0.0f, 3.0f))].setPosition(true);
+            }
+        }
 
         if (debugMode)
         {
@@ -66,6 +84,7 @@ public class Switch_Mode : MonoBehaviour
     void Update()
     {
         UIFade();           // Update color for attached UI Hints
+        
 
         if (Position == oldPosition) return;
 
@@ -99,7 +118,14 @@ public class Switch_Mode : MonoBehaviour
             UI_Hint_CCW.color = disabledColor;
         }
 
-        if (Position != 4)
+        int maxPosition = 4; 
+        
+        if(demoMode)
+        {
+            maxPosition = 1;
+        }
+
+        if (Position != maxPosition)
         {
             adjFadeTime = fadeTimerCW * (1.0f / fadeTimeTotal);
 
@@ -131,4 +157,9 @@ public class Switch_Mode : MonoBehaviour
         fadeTimerCW = 0.0f;
     }
 
+    public void Reset()
+    {
+        Position = 0;
+        Start();
+    }
 }

@@ -89,6 +89,11 @@ public class Switch_Generic : MonoBehaviour
     {
         return Position;
     }
+
+    public void setPosition(bool i)
+    {
+        Position = i;
+    }
     
     /// <summary>
     /// Collision boxes register raycasted mouse clicks, and set next position here.

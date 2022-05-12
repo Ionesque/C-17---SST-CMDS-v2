@@ -25,6 +25,7 @@ public class CmdsManager : MonoBehaviour
     public int Switch_Program_Last = 1;
     public int Switch_Mode = 0;
 
+
     public AudioSource Avionics_On;
     public AudioSource Avionics_Off;
     public AudioSource Flare_Launch;
@@ -133,7 +134,7 @@ public class CmdsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Switch_Mode);
+        Debug.Log(CurrentMode);
         Switch_Mode = sw_Mode.SwitchPosition();
         ProcessFailure();
         if (failed > 0) return;
@@ -308,7 +309,7 @@ public class CmdsManager : MonoBehaviour
         else if (CurrentMode == mode.Not_Sim && screenTimer > 1.0f) ChangeMode(mode.Flare_Count);
 
 
-        if(twoSelected)
+        if(twoSelected && Switch_Program != Switch_Program_Last)
         {
             twoSelected = false;
             if (CurrentMode == mode.BIT4) ChangeMode(mode.Not_Sim);
@@ -322,7 +323,7 @@ public class CmdsManager : MonoBehaviour
             else if (CurrentMode == mode.Main_SystemCheck) ChangeMode(mode.Not_Sim);
             else if (CurrentMode == mode.Squib_Mispoll) ChangeMode(mode.Squib_MispollListing);
             else if (CurrentMode == mode.Squib_Dropout) ChangeMode(mode.Squib_DropoutListing);
-            else if (CurrentMode == mode.Squib_Clear) ChangeMode(mode.Main_SquibData);
+            else if (CurrentMode == mode.Squib_Clear) ChangeMode(mode.Not_Sim);
         }
         // Process diplay mode if bit program is selected
         if (bitSelected && Switch_Program != Switch_Program_Last)
@@ -520,6 +521,8 @@ public class CmdsManager : MonoBehaviour
     /// </summary>
     public void Reset()
     {
+        lcd_TestPattern.enabled = false;
+
         Flare_DamagedBucket = (int)Random.RandomRange(0.0f, 11.0f);
         Mispolls = (int)Random.RandomRange(2.0f, 7.0f);
         //Dropouts = (int)Random.RandomRange(0.0f, 5.0f);       // Random function disabled at request of Justin Higginbotham, fixed to 0

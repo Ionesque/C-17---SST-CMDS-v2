@@ -16,6 +16,7 @@ public class Switch_Jettison : MonoBehaviour
 
     // Switch variables
     public bool debugMode = false;
+    public bool demoMode = true;
 
     bool Position = false;               // Current switch position to off
     bool oldPosition = false;            // Track last known position to play sounds
@@ -23,6 +24,7 @@ public class Switch_Jettison : MonoBehaviour
     // Highlight variables
     Color restingColor = new Vector4(0.0f, 1.0f, 0.0f, 0.7f);
     Color clickedColor = new Vector4(1.0f, 1.0f, 0.0f, 0.7f);
+    Color disabledColor = new Vector4(0.3f, 0.3f, 0.3f, 0.0f);
 
     const float fadeTimeTotal = 0.5f;
     float fadeTimer = 0.5f;
@@ -30,7 +32,7 @@ public class Switch_Jettison : MonoBehaviour
 
     void Start()
     {
-        if (Random.Range(0.0f, 1.0f) < 0.10) Position = true;           // 10% chance of an autofail scenario being activated
+        if (demoMode && Random.Range(0.0f, 1.0f) < 0.10) Position = true;           // 10% chance of an autofail scenario being activated
 
         if (debugMode)
         {
@@ -47,13 +49,18 @@ public class Switch_Jettison : MonoBehaviour
 
     void Update()
     {
-        if (fadeTimer >= fadeTimeTotal)
+        if(demoMode)
+        {
+            UI_Hint.color = disabledColor;
+        }
+        else if (fadeTimer >= fadeTimeTotal)
         {
             UI_Hint.color = restingColor;
         }
         else
         {
             UI_Hint.color = Vector4.Lerp(clickedColor, restingColor, fadeTimer * (1.0f / fadeTimeTotal));
+                
             fadeTimer += Time.deltaTime;
             string dbgString = "Fade Timer: " + fadeTimer;
             Debug.Log(dbgString);
@@ -94,6 +101,7 @@ public class Switch_Jettison : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
+        if (demoMode) return;
         Position = !Position;
         fadeTimer = 0.0f;
     }
