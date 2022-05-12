@@ -32,7 +32,7 @@ public class Switch_Jettison : MonoBehaviour
 
     void Start()
     {
-        if (demoMode && Random.Range(0.0f, 1.0f) < 0.10) Position = true;           // 10% chance of an autofail scenario being activated
+        if (!demoMode && Random.Range(0.0f, 1.0f) < 0.10) Position = true;           // 10% chance of an autofail scenario being activated
 
         if (debugMode)
         {

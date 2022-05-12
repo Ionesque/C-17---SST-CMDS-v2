@@ -134,7 +134,6 @@ public class CmdsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(CurrentMode);
         Switch_Mode = sw_Mode.SwitchPosition();
         ProcessFailure();
         if (failed > 0) return;
@@ -551,11 +550,11 @@ public class CmdsManager : MonoBehaviour
         Power_on.SetActive(false);
         Power_off.SetActive(true);
         
-        if (CoinFlip(0.05f)) Switch_Mode = 2;
-        else Switch_Mode = 0;
+        //if (CoinFlip(0.05f)) Switch_Mode = 2;
+        //else Switch_Mode = 0;
     }
 
-    #region Common Functions
+    /*#region Common Functions
     /// <summary>
     /// Common coin flip function with 50% odds
     /// </summary>
@@ -577,5 +576,5 @@ public class CmdsManager : MonoBehaviour
         if (Random.Range(0.0f, 1.0f) < odds) return true;
         else return false;
     }
-    #endregion
+    #endregion*/
 }

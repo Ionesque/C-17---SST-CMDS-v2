@@ -153,6 +153,7 @@ public class Switch_Mode : MonoBehaviour
     }
     public void Increase()
     {
+        if (demoMode && Position >= 1) return;
         Position++;
         fadeTimerCW = 0.0f;
     }
