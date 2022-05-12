@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Legacy UI code from older version of Unity, should be replaced at some point or just contained in one scene.
+/// </summary>
 public class CMDS_FailUI : MonoBehaviour {
 
     public GUIStyle big;
@@ -22,22 +25,6 @@ public class CMDS_FailUI : MonoBehaviour {
 
     private void OnGUI()
     {
-        
-        GUI.Label(new Rect(ScaleX(0.015f), ScaleY(0.0f), ScaleX(1.0f), ScaleY(0.2f)), "Congratulations!\n", big);
-        GUI.Label(new Rect(ScaleX(0.015f), ScaleY(0.2f), ScaleX(1.0f), ScaleY(1.0f)), 
-            "You downloaded flares the fast way!\n" +
-            "\n" +
-			"Turns out someone left some switches on that shouldn't have been on.\n" +
-            "Hope you drank some water and your blues still fit.\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "Lesson learned:\n" +
-            "If the TO tells you to check a switch, check the switch.", normal);
-
         if (GUI.Button(new Rect(ScaleX(0.0f), ScaleY(0.0f), ScaleX(1.0f), ScaleY(1.0f)), "", GUIStyle.none))
         {
             SceneManager.LoadScene("CMDS Panel");
