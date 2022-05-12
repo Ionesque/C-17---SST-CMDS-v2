@@ -4,3 +4,9 @@ Library/
 Temp/
 
 Logs/
+
+obj/Debug/
+
+.vs/C-17-SST - CMDS v2/project-colors.json
+
+.vs/C-17-SST - CMDS v2/v17/.suo
