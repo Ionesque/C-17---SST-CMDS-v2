@@ -21,6 +21,7 @@ public class CmdsManager : MonoBehaviour
 
     public bool External_Power = false;
     public int Switch_Program = 1;
+    public int Switch_Program_Last = 1;
     public int Switch_Mode = 0;
 
     public AudioSource Avionics_On;
@@ -133,6 +134,8 @@ public class CmdsManager : MonoBehaviour
     {
         ProcessFailure();
         if (failed > 0) return;
+
+        readProgramSwitch();
 
         ProcessButtons();       // Check if powered
         if (CurrentMode != 0 || External_Power)
@@ -251,7 +254,7 @@ public class CmdsManager : MonoBehaviour
     }
     void ProcessProgram()
     {
-        if (Switch_Program == 0)
+        /*if (Switch_Program == 0)
         {
             if(programTimer > 0.1f)
             {
@@ -259,7 +262,7 @@ public class CmdsManager : MonoBehaviour
                 programTimer = 0.0f;
             }
             programTimer += Time.deltaTime;
-        }
+        }*/
         
     }
     
@@ -319,7 +322,7 @@ public class CmdsManager : MonoBehaviour
             else if (CurrentMode == mode.Squib_Clear) ChangeMode(mode.Main_SquibData);
         }
         // Process diplay mode if bit program is selected
-        if (bitSelected)
+        if (bitSelected && Switch_Program != Switch_Program_Last)
         {
             bitSelected = false;
             if(CurrentMode == mode.BIT4) ChangeMode(mode.Not_Sim);
@@ -404,6 +407,8 @@ public class CmdsManager : MonoBehaviour
             }
             else if (CurrentMode == mode.Squib_Clear) ChangeMode(mode.Flare_Count);
         }
+
+        Switch_Program_Last = Switch_Program;
     }
 
 
@@ -455,20 +460,34 @@ public class CmdsManager : MonoBehaviour
         }
     }
 
+    public void readProgramSwitch()
+    {
+        
+        Switch_Program = sw_Program.SwitchPosition();
+        if (Switch_Program == 0) bitSelected = true;
+        else if (Switch_Program == 2) twoSelected = true;
+        else
+        {
+            bitSelected = false;
+            twoSelected = false;
+        }
+        programTimer = 0.0f;
+    }
+
     public void TogglePrgmBit()
     {
-        if (Switch_Program == 2) Switch_Program = 1;
+        /*if (Switch_Program == 2) Switch_Program = 1;
         else
         {
             Switch_Program = 0;
             programTimer = 0.0f;
             bitSelected = true;
-        }
+        }*/
     }
 
     public void TogglePrgm2()
     {
-        if (Switch_Program == 1)
+        /*if (Switch_Program == 1)
         {
             Switch_Program = 2;
             twoSelected = true;
@@ -476,7 +495,7 @@ public class CmdsManager : MonoBehaviour
         else Switch_Program = 1;
             
         programTimer = 0.0f;
-        
+        */
     }
     public void toggleModeSwitch()
     {

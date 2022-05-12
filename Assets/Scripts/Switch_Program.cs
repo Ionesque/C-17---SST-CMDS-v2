@@ -11,11 +11,9 @@ public class Switch_Program : MonoBehaviour
     
     public MeshRenderer Collision_Hintbox_CCW;
     public SpriteRenderer UI_Hint_CCW;
-    public SpriteRenderer UI_Arrow_CCW;
 
     public MeshRenderer Collision_Hintbox_CW;
     public SpriteRenderer UI_Hint_CW;
-    public SpriteRenderer UI_Arrow_CW;
 
     public AudioSource snd_Switched;       // Switch Sounds
 
