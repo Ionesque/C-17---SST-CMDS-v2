@@ -21,8 +21,8 @@ public class Switch_Jettison : MonoBehaviour
     bool oldPosition = false;            // Track last known position to play sounds
 
     // Highlight variables
-    Color restingColor = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
-    Color clickedColor = new Vector4(1.0f, 1.0f, 0.0f, 1.0f);
+    Color restingColor = new Vector4(0.0f, 1.0f, 0.0f, 0.7f);
+    Color clickedColor = new Vector4(1.0f, 1.0f, 0.0f, 0.7f);
 
     const float fadeTimeTotal = 0.5f;
     float fadeTimer = 0.5f;

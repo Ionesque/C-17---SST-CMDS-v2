@@ -17,6 +17,7 @@ public class CmdsManager : MonoBehaviour
     // Switches and other interactive elements
     public Switch_Jettison sw_Jettison;
     public Switch_Program sw_Program;
+    public Switch_Mode sw_Mode;
 
 
     public bool External_Power = false;
@@ -132,6 +133,8 @@ public class CmdsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(Switch_Mode);
+        Switch_Mode = sw_Mode.SwitchPosition();
         ProcessFailure();
         if (failed > 0) return;
 
@@ -424,10 +427,10 @@ public class CmdsManager : MonoBehaviour
 
             ChangeMode(mode.off);
         }
-        else if (Switch_Mode == 1 && CurrentMode == mode.off) ChangeMode(mode.BIT1);
+        else if (Switch_Mode > 0 && CurrentMode == mode.off) ChangeMode(mode.BIT1);
         
         if (sw_Jettison.SwitchPosition() && External_Power) failed = 1;         // Jettison switch has 5% chance of being on, defined in Switch_Jettison.cs
-        else if (Switch_Mode == 2 && External_Power) failed = 1;
+        else if (Switch_Mode >= 3 && External_Power) failed = 1;                 // Mode switch being in semi or auto is 10%
     }
 
     #region public button functions
@@ -497,12 +500,13 @@ public class CmdsManager : MonoBehaviour
         programTimer = 0.0f;
         */
     }
+    /*
     public void toggleModeSwitch()
     {
         if (Switch_Mode == 2) Switch_Mode = 0;
         else if (Switch_Mode == 1) Switch_Mode = 0;
         else if (Switch_Mode == 0) Switch_Mode = 1;
-    }
+    }*/
     #endregion
 
     void ChangeMode(mode DesiredMode)
