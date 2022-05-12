@@ -16,11 +16,10 @@ public class CmdsManager : MonoBehaviour
 
     // Switches and other interactive elements
     public Switch_Jettison sw_Jettison;
-
+    public Switch_Program sw_Program;
 
 
     public bool External_Power = false;
-    public bool Switch_Jettison = false;
     public int Switch_Program = 1;
     public int Switch_Mode = 0;
 
@@ -422,16 +421,12 @@ public class CmdsManager : MonoBehaviour
         }
         else if (Switch_Mode == 1 && CurrentMode == mode.off) ChangeMode(mode.BIT1);
         
-        if (Switch_Jettison && External_Power) failed = 1;
+        if (sw_Jettison.SwitchPosition() && External_Power) failed = 1;         // Jettison switch has 5% chance of being on, defined in Switch_Jettison.cs
         else if (Switch_Mode == 2 && External_Power) failed = 1;
     }
 
     #region public button functions
     
-    public void ToggleJettison()
-    {
-        Switch_Jettison = !Switch_Jettison;
-    }
 
     public void ExitGame()
     {
@@ -523,9 +518,6 @@ public class CmdsManager : MonoBehaviour
         Disp_LCD.text = "";
 
         External_Power = false;
-
-        if (CoinFlip(0.05f)) Switch_Jettison = true;
-        else Switch_Jettison = false;
 
         ProcessFlareStrings();
         Switch_Program = 1;
