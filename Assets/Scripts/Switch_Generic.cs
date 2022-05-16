@@ -56,8 +56,6 @@ public class Switch_Generic : MonoBehaviour
         {
             UI_Hint.color = Vector4.Lerp(clickedColor, restingColor, fadeTimer * (1.0f / fadeTimeTotal));
             fadeTimer += Time.deltaTime;
-            string dbgString = "Fade Timer: " + fadeTimer;
-            Debug.Log(dbgString);
         }
         
         if (Position == oldPosition) return;
