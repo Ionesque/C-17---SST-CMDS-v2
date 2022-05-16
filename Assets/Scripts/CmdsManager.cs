@@ -30,9 +30,6 @@ public class CmdsManager : MonoBehaviour
     public AudioSource Avionics_Off;
     public AudioSource Flare_Launch;
 
-    public GameObject Power_on;
-    public GameObject Power_off;
-
     
     
 
@@ -441,9 +438,9 @@ public class CmdsManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void TogglePower()
+    public void TogglePower(bool State)
     {
-        External_Power = !External_Power;
+        External_Power = State;
         if (External_Power)
             {
             Avionics_On.Play();
@@ -458,6 +455,7 @@ public class CmdsManager : MonoBehaviour
             Status_NOGO[0].color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
             Status_NOGO[1].color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
             Status_GO.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+            lcd_TestPattern.enabled = false;
             Disp_LCD.color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
             Disp_LCD.text = "";
         }
@@ -546,35 +544,5 @@ public class CmdsManager : MonoBehaviour
 
         ProcessFlareStrings();
         Switch_Program = 1;
-
-        Power_on.SetActive(false);
-        Power_off.SetActive(true);
-        
-        //if (CoinFlip(0.05f)) Switch_Mode = 2;
-        //else Switch_Mode = 0;
     }
-
-    /*#region Common Functions
-    /// <summary>
-    /// Common coin flip function with 50% odds
-    /// </summary>
-    /// <returns></returns>
-    bool CoinFlip()
-    {
-        if (Random.Range(0.0f, 1.0f) > 0.5f) return true;
-        else return false;
-    }
-
-    bool CoinFlip(float odds)
-    {
-        if (odds < 0.0f || odds > 1.0f)
-        {
-            Debug.Log("ERROR: Coinflip performed with odds less than 0% (0.0f) or greater than 100% (1.0f)\n" +
-                "Value defaulted to 50% (0.5f)");
-            odds = 0.5f;
-        }
-        if (Random.Range(0.0f, 1.0f) < odds) return true;
-        else return false;
-    }
-    #endregion*/
 }
