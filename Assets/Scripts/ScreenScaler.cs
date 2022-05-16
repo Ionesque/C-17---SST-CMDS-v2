@@ -5,14 +5,27 @@ using UnityEngine.UI;
 
 /// <summary>
 /// This handles screen scaling and positioning based on screen resolution/size.
+/// History so I don't forget later:
+/// -Intial version tried using dynamic camera/UI adjustments
+/// -Unity's UI just wouldn't play nice, coded buttons as colliders/quads
+/// -Fixed camera/UI positions based on common screen ratios
 /// </summary>
 [ExecuteInEditMode]
 public class ScreenScaler : MonoBehaviour
 {
-    public Text dbgText;
     public Transform camera;
-    public GameObject UI_Narrow;
+    public GameObject UI_PhoneNarrow;
+    public GameObject UI_IPAD_Narrow;
+    public GameObject UI_IPAD_Wide;
     public GameObject UI_Wide;
+
+    Vector3[] camPosition = new Vector3[4]
+    {
+        new Vector3(1.88f, 3.46f, -25.82f),
+        new Vector3(1.82f, 2.05f, -16.9f),
+        new Vector3(-0.2f, 2.12f, -14.18f),
+        new Vector3(0.44f, 1.01f, -14.41f)
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -23,45 +36,43 @@ public class ScreenScaler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
-        float startVal_x = -1.57f;
-        float endVal_x = 1.8f;
-
-        float startVal_y = 0.25f;
-        float endVal_y = 0.25f;
-
-        float startVal_z = -27.08f;
-        float endVal_z = -11.03f;
-
         float screenRatio = (float)Screen.width / (float)Screen.height;
-
-        float calcValue = screenRatio;
-        calcValue -= 1.333f;
-        calcValue *= 3.0f;
-
-        if (calcValue > 1.0f) calcValue = 1.0f;
-        else if (calcValue < 0.0f)
+        if (screenRatio < 0.72)
         {
-            calcValue = 0.0f;
+            camera.localPosition = camPosition[0];
+            UI_PhoneNarrow.SetActive(true);
+            UI_IPAD_Narrow.SetActive(false);
+            UI_IPAD_Wide.SetActive(false);
+            UI_Wide.SetActive(false);
+        }
+        else  if(screenRatio < 1.1)
+        {
+            camera.localPosition = camPosition[1];
+            UI_PhoneNarrow.SetActive(false);
+            UI_IPAD_Narrow.SetActive(true);
+            UI_IPAD_Wide.SetActive(false);
+            UI_Wide.SetActive(false);
+        }
+        else if(screenRatio < 1.4)
+        {
+            camera.localPosition = camPosition[2];
+            UI_PhoneNarrow.SetActive(false);
+            UI_IPAD_Narrow.SetActive(false);
+            UI_IPAD_Wide.SetActive(true);
+            UI_Wide.SetActive(false);
+        }
+        else
+        {
+            camera.localPosition = camPosition[3];
+            UI_PhoneNarrow.SetActive(false);
+            UI_IPAD_Narrow.SetActive(false);
+            UI_IPAD_Wide.SetActive(false);
+            UI_Wide.SetActive(true);
         }
 
-        float camX = Mathf.Lerp(endVal_x, startVal_x, calcValue);
-
-        // Y Calcs
-        float camZ = adjustedValue(.445f, 1.111f, screenRatio);
-        camZ = Mathf.Lerp(startVal_z, endVal_z, camZ);
-
-        camera.position = new Vector3(camX, 0.25f, camZ);
-
-        string dbgStr = "Width: " + Screen.width + "\n" +
-            "Height: " + Screen.height + "\n" +
-            "Ratio: " + ((float)Screen.width / (float)Screen.height) + "\n" +    // 2.05 = 18.5:9  1.777 = 16.9, 1.6 = 16:10, 1.333 = 4:3 
-        "Cam X: " + camX + "\n" +
-        "CalcValue: " + calcValue + "\n";
-        dbgText.text = dbgStr;
     }
 
+    /* - Dynamic camera LERP value code. No longer used for this, but I want to hold on to it for ther uses later.
     float adjustedValue(float LowValue, float HighValue, float InValue)
     {
         float multiplier = 1 / (HighValue - LowValue);
@@ -73,5 +84,5 @@ public class ScreenScaler : MonoBehaviour
             calcValue = 0.0f;
         }
         return calcValue;
-    }
+    }*/
 }
