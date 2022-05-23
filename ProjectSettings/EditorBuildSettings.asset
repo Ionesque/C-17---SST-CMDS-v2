@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/CMDS Panel.unity
-    guid: dba4917f98c5eca47a715a51c5e2fc96
-  - enabled: 1
     path: Assets/Fail Screen.unity
     guid: e35976ee2b73cd44b96c13f1add82e14
+  - enabled: 1
+    path: Assets/CMDS Panel WebGL.unity
+    guid: 6c6432d506df93241aa3978a72564a50
+  - enabled: 0
+    path: Assets/CMDS Panel.unity
+    guid: dba4917f98c5eca47a715a51c5e2fc96
   m_configObjects: {}
